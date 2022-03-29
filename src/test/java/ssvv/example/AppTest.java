@@ -54,7 +54,7 @@ public class AppTest
     }
 
     @Test
-    public void test_1_addStudent_success(){
+    public void test_1_addStudent_success() throws Exception {
         // Dummy test to test Jetkins
         service.addStudent(new Student("1", "Real name", 1, "realemail@gmail.com"));
     }
@@ -62,7 +62,7 @@ public class AppTest
     // id
 
     @Test
-    public void test_2_addStudent_success_validId(){
+    public void test_2_addStudent_success_validId() throws Exception {
         service.addStudent(new Student("1", "Real name", 1, "realemail@gmail.com"));
     }
 
@@ -75,7 +75,7 @@ public class AppTest
     // name
 
     @Test
-    public void test_2_addStudent_success_validName(){
+    public void test_2_addStudent_success_validName() throws Exception {
         service.addStudent(new Student("1", "Real name", 1, "realemail@gmail.com"));
     }
 
@@ -88,7 +88,7 @@ public class AppTest
     // mail
 
     @Test
-    public void test_2_addStudent_success_validMail(){
+    public void test_2_addStudent_success_validMail() throws Exception {
         service.addStudent(new Student("1", "Real name", 1, "realemail@gmail.com"));
     }
 
@@ -101,7 +101,7 @@ public class AppTest
     // Group
 
     @Test
-    public void test_2_addStudent_success_validGroup(){
+    public void test_2_addStudent_success_validGroup() throws Exception {
         service.addStudent(new Student("1", "Real name", 1, "realemail@gmail.com"));
     }
 
@@ -114,7 +114,7 @@ public class AppTest
     // Prof
 
     @Test
-    public void test_2_addStudent_success_validProf(){
+    public void test_2_addStudent_success_validProf() throws Exception {
         service.addStudent(new Student("1", "Real name", 1, "realemail@gmail.com"));
     }
 
@@ -128,12 +128,12 @@ public class AppTest
     // Id logic
 
     @Test
-    public void test_2_addStudent_success_IDDoesNotExist(){
+    public void test_2_addStudent_success_IDDoesNotExist() throws Exception {
         service.addStudent(new Student("1", "Real name", 1, "realemail@gmail.com"));
     }
 
     @Test
-    public void test_3_addStudent_ExceptionThrown_IdExists(){
+    public void test_3_addStudent_ExceptionThrown_IdExists() throws Exception {
         service.addStudent(new Student("1", "Real name", 1, "realemail@gmail.com"));
         assertThrows(Exception.class,
                 () -> service.addStudent(new Student("1", "Real name", 1, "realemail@gmail.com")));

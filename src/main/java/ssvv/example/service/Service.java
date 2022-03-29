@@ -58,9 +58,14 @@ public class Service {
      * @param student - studentul pe care il adauga
      * @return null daca studentul a fost adaugat cu succes sau studentul din memorie daca acesta exista deja
      */
-    public Student addStudent(Student student) {
+    public Student addStudent(Student student) throws Exception {
         studentValidator.validate(student);
+        Student s = findStudent(student.getID());
+        if(s != null){
+            throw new Exception("Student exists");
+        }
         return studentFileRepository.save(student);
+
     }
 
     /**

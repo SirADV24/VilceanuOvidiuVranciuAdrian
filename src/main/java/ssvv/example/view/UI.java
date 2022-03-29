@@ -27,7 +27,7 @@ public class UI {
     /**
      * Metoda care ruleaza aplicatia
      */
-    public void run() {
+    public void run() throws Exception {
         System.out.println("Bine ati venit!");
         while (true) {
             try {
@@ -64,7 +64,7 @@ public class UI {
     /**
      * Afiseaza meniul de comenzi asupra studentilor
      */
-    private void meniuStudent() {
+    private void meniuStudent() throws Exception {
         while (true) {
             System.out.println("\n0.Iesire meniu student");
             System.out.println("1.Introducere student");
@@ -97,7 +97,7 @@ public class UI {
      * Adauga un student
      * @throws ValidationException daca datele studentul exista deja
      */
-    private void adaugaStudent() throws ValidationException {
+    private void adaugaStudent() throws Exception {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Introduceti id student: ");
         String idStudent = scanner.next();
