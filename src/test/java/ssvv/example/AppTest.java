@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ssvv.example.domain.Student;
+import ssvv.example.domain.Tema;
 import ssvv.example.repository.NotaXMLRepo;
 import ssvv.example.repository.StudentXMLRepo;
 import ssvv.example.repository.TemaXMLRepo;
@@ -11,6 +12,7 @@ import ssvv.example.service.Service;
 import ssvv.example.validation.NotaValidator;
 import ssvv.example.validation.StudentValidator;
 import ssvv.example.validation.TemaValidator;
+import ssvv.example.validation.ValidationException;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -19,6 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 
+import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class AppTest 
@@ -138,6 +141,53 @@ public class AppTest
         assertThrows(Exception.class,
                 () -> service.addStudent(new Student("1", "Real name", 1, "realemail@gmail.com")));
 
+    }
+
+    //assignment
+
+    @Test
+    public void tc_1_addAssignment_validNonExistingAssignment() {
+        assertNull(service.addTema(new Tema("123", "abc", 1, 1)));
+    }
+
+
+    @Test
+    public void tc_3_addAssignment_alreadyExistingAssignment(){
+        service.addTema(new Tema("123","abc",1,1));
+        assertNotNull(service.addTema(new Tema("123","abc",1,1)));
+        assertEquals(1, service.getAllTeme().spliterator().getExactSizeIfKnown());
+    }
+
+    @Test
+    public void tc_4_addAssignment_invalidID() {
+        assertThrows(ValidationException.class,
+                () -> service.addTema(new Tema(null, "sdaf", 1, 1)));
+        assertThrows(ValidationException.class,
+                () -> service.addTema(new Tema("", "fafdsa", 1, 1)));
+    }
+
+    @Test
+    public void tc_5_addAssignment_invalidDescription() {
+        assertThrows(ValidationException.class,
+                () -> service.addTema(new Tema("dsfa", null, 1, 1)));
+        assertThrows(ValidationException.class,
+                () -> service.addTema(new Tema("fdsf", "", 1, 1)));
+    }
+
+    @Test
+    public void tc_6_addAssignment_invalidDeadline() {
+        assertThrows(ValidationException.class,
+                () -> service.addTema(new Tema("dsfa", "fdg", -2, 1)));
+        assertThrows(ValidationException.class,
+                () -> service.addTema(new Tema("fdsf", "gfd", 155, 1)));
+    }
+
+    @Test
+    public void tc_7_addAssignment_invalidPrimire() {
+        assertThrows(ValidationException.class,
+                () -> service.addTema(new Tema("dsfa", "fdg", 10, -1)));
+        assertThrows(ValidationException.class,
+                () -> service.addTema(new Tema("fdsf", "gfd", 10, 1222)));
     }
 
 }
