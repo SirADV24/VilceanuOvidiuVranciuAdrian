@@ -19,6 +19,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public class AppTest 
 {
     private Service service;
@@ -53,8 +55,89 @@ public class AppTest
 
     @Test
     public void test_1_addStudent_success(){
+        // Dummy test to test Jetkins
         service.addStudent(new Student("1", "Real name", 1, "realemail@gmail.com"));
     }
 
+    // id
+
+    @Test
+    public void test_2_addStudent_success_validId(){
+        service.addStudent(new Student("1", "Real name", 1, "realemail@gmail.com"));
+    }
+
+    @Test
+    public void test_3_addStudent_ExceptionThrown_invalidId(){
+        assertThrows(Exception.class,
+                () -> service.addStudent(new Student("", "Real name", 1, "realemail@gmail.com")));
+    }
+
+    // name
+
+    @Test
+    public void test_2_addStudent_success_validName(){
+        service.addStudent(new Student("1", "Real name", 1, "realemail@gmail.com"));
+    }
+
+    @Test
+    public void test_3_addStudent_ExceptionThrown_invalidName(){
+        assertThrows(Exception.class,
+                () -> service.addStudent(new Student("", "", 1, "realemail@gmail.com")));
+    }
+
+    // mail
+
+    @Test
+    public void test_2_addStudent_success_validMail(){
+        service.addStudent(new Student("1", "Real name", 1, "realemail@gmail.com"));
+    }
+
+    @Test
+    public void test_3_addStudent_ExceptionThrown_invalidMail(){
+        assertThrows(Exception.class,
+                () -> service.addStudent(new Student("", "Real name", -1, "realemail@gmail.com")));
+    }
+
+    // Group
+
+    @Test
+    public void test_2_addStudent_success_validGroup(){
+        service.addStudent(new Student("1", "Real name", 1, "realemail@gmail.com"));
+    }
+
+    @Test
+    public void test_3_addStudent_ExceptionThrown_invalidGroup(){
+        assertThrows(Exception.class,
+                () -> service.addStudent(new Student("", "Real name", 1, null)));
+    }
+
+    // Prof
+
+    @Test
+    public void test_2_addStudent_success_validProf(){
+        service.addStudent(new Student("1", "Real name", 1, "realemail@gmail.com"));
+    }
+
+    @Test
+    public void test_3_addStudent_ExceptionThrown_invalidProf(){
+        assertThrows(Exception.class,
+                () -> service.addStudent(new Student("", "Real name", 1, "realemail@gmail.com")));
+    }
+
+
+    // Id logic
+
+    @Test
+    public void test_2_addStudent_success_IDDoesNotExist(){
+        service.addStudent(new Student("1", "Real name", 1, "realemail@gmail.com"));
+    }
+
+    @Test
+    public void test_3_addStudent_ExceptionThrown_IdExists(){
+        service.addStudent(new Student("1", "Real name", 1, "realemail@gmail.com"));
+        assertThrows(Exception.class,
+                () -> service.addStudent(new Student("1", "Real name", 1, "realemail@gmail.com")));
+
+    }
 
 }
