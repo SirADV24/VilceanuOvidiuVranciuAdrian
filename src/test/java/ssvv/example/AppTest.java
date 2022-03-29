@@ -157,37 +157,4 @@ public class AppTest
         assertNotNull(service.addTema(new Tema("123","abc",1,1)));
         assertEquals(1, service.getAllTeme().spliterator().getExactSizeIfKnown());
     }
-
-    @Test
-    public void tc_4_addAssignment_invalidID() {
-        assertThrows(ValidationException.class,
-                () -> service.addTema(new Tema(null, "sdaf", 1, 1)));
-        assertThrows(ValidationException.class,
-                () -> service.addTema(new Tema("", "fafdsa", 1, 1)));
-    }
-
-    @Test
-    public void tc_5_addAssignment_invalidDescription() {
-        assertThrows(ValidationException.class,
-                () -> service.addTema(new Tema("dsfa", null, 1, 1)));
-        assertThrows(ValidationException.class,
-                () -> service.addTema(new Tema("fdsf", "", 1, 1)));
-    }
-
-    @Test
-    public void tc_6_addAssignment_invalidDeadline() {
-        assertThrows(ValidationException.class,
-                () -> service.addTema(new Tema("dsfa", "fdg", -2, 1)));
-        assertThrows(ValidationException.class,
-                () -> service.addTema(new Tema("fdsf", "gfd", 155, 1)));
-    }
-
-    @Test
-    public void tc_7_addAssignment_invalidPrimire() {
-        assertThrows(ValidationException.class,
-                () -> service.addTema(new Tema("dsfa", "fdg", 10, -1)));
-        assertThrows(ValidationException.class,
-                () -> service.addTema(new Tema("fdsf", "gfd", 10, 1222)));
-    }
-
 }
