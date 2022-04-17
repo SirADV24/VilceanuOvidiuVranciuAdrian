@@ -114,8 +114,13 @@ public class Service {
      * @param tema  - tema pe care o adauga
      * @return null daca s-a facut adaugarea sau tema daca aceasta exista deja
      */
-    public Tema addTema(Tema tema){
+    public Tema addTema(Tema tema) throws ValidationException{
+
         temaValidator.validate(tema);
+        if(temaFileRepository.findOne(tema.getID()) != null)
+        {
+            throw new ValidationException("Not unique assignments should not be added!");
+        }
         return temaFileRepository.save(tema);
     }
 
@@ -170,7 +175,7 @@ public class Service {
         Student student = studentFileRepository.findOne(nota.getIdStudent());
         Tema tema = temaFileRepository.findOne(nota.getIdTema());
         int predare = calculeazaSPredare(nota.getData());
-        if(predare != tema.getDeadline()){
+        if(predare > tema.getDeadline()){ //modification, the student dhould be able to deliver early
             if (predare-tema.getDeadline() == 1){
                 nota.setNota(nota.getNota()-2.5);
             }
