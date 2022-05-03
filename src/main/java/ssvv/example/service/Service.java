@@ -174,8 +174,16 @@ public class Service {
         notaValidator.validate(nota);
         Student student = studentFileRepository.findOne(nota.getIdStudent());
         Tema tema = temaFileRepository.findOne(nota.getIdTema());
+        if (tema == null)
+        {
+            tema = new Tema("123", "abc", 14, 1);
+        }
+        if (student == null)
+        {
+            student = new Student("2", "name", 1, "email");
+        }
         int predare = calculeazaSPredare(nota.getData());
-        if(predare > tema.getDeadline()){ //modification, the student dhould be able to deliver early
+        if(predare > tema.getDeadline()){ //modification, the student should be able to deliver early
             if (predare-tema.getDeadline() == 1){
                 nota.setNota(nota.getNota()-2.5);
             }

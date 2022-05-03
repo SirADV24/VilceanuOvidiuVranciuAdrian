@@ -1,0 +1,74 @@
+    public Tema(String nrTema, String descriere, int deadline, int primire) {
+        this.nrTema = nrTema;
+        this.descriere = descriere;
+        this.deadline = deadline;
+        this.primire = primire;
+    }
+        //service
+        public Tema addTema(Tema tema) throws ValidationException{
+
+            temaValidator.validate(tema);
+            if(temaFileRepository.findOne(tema.getID()) != null)
+            {
+                throw new ValidationException("Not unique assignments should not be added!");
+            }
+            return temaFileRepository.save(tema);
+        }
+
+    public E save(E entity) {
+        /*
+        for(ID id: elemente.keySet()){
+            if(id == entity.getID()){
+                return elemente.get(id);
+            }
+        }
+        */
+        E el = this.findOne(entity.getID());
+        if (el==null){
+            this.elemente.put(entity.getID(), entity);
+            return null;
+        }
+        else return entity;}
+
+    public void writeToFile(){
+        try {
+            Document document = DocumentBuilderFactory
+                    .newInstance()
+                    .newDocumentBuilder()
+                    .newDocument();
+            Element root  = document.createElement("inbox");
+            document.appendChild(root);
+            super.findAll().forEach(e->{
+                Element elem = createElementfromEntity(document,e);
+                root.appendChild(elem);
+            });
+
+            //write Document to file
+            Transformer transformer = TransformerFactory.
+                    newInstance().newTransformer();
+            transformer.transform(new DOMSource(document),
+                    new StreamResult(this.filename));
+
+        }catch(Exception e){
+        e.printStackTrace();
+        }
+    }
+
+       public void validate(Tema entity) throws ValidationException {
+           if(entity.getID() == null || entity.getID().equals("")) {
+               throw new ValidationException("Numar tema invalid!");
+           }
+           if(entity.getDescriere() == null || entity.getDescriere().equals("")){
+               throw new ValidationException("Descriere invalida!");
+           }
+           if(entity.getDeadline() < 1 || entity.getDeadline() > 14) {
+               throw new ValidationException("Deadlineul trebuie sa fie intre 1-14.");
+           }
+           if(entity.getPrimire() < 1 || entity.getPrimire() > 14) {
+               throw new ValidationException("Saptamana primirii trebuie sa fie intre 1-14.");
+           }
+           if(entity.getPrimire() > entity.getDeadline()){
+               throw new ValidationException("Data de primire invalida!");
+           }
+       }
+

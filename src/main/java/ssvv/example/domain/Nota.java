@@ -39,6 +39,7 @@ public class Nota implements HasID<String> {
      * @return id-ul temei
      */
     public String getIdTema() {
+
         return idTema;
     }
 
